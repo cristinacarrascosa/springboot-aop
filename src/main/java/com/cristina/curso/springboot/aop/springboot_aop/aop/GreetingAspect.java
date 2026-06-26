@@ -12,49 +12,52 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Order(2)
 @Aspect
 @Component
 public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+   
 
-    /*@Before("execution(* com.cristina.curso.springboot.aop.springboot_aop.services.GreetingService.*(..))") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
+    @Before("GreetingServicePointcuts.greetingLoggerPointCut()") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
     public void loggerBefore(JoinPoint joinPoint) {
         
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
-        logger.info("Antes: " + method + " con los argumentos: " + args);
+        logger.info("1.Antes: " + method + " con los argumentos: " + args);
     }
 
-    @After("execution(* com.cristina.curso.springboot.aop.springboot_aop.services.GreetingService.*(..))") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
+    @After("GreetingServicePointcuts.greetingLoggerPointCut()") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
     public void loggerAfter(JoinPoint joinPoint) {
         
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
-        logger.info("Después: " + method + " con los argumentos: " + args);
+        logger.info("2.Después: " + method + " con los argumentos: " + args);
     }
 
-    @AfterReturning("execution(* com.cristina.curso.springboot.aop.springboot_aop.services.GreetingService.*(..))") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
+    @AfterReturning("GreetingServicePointcuts.greetingLoggerPointCut()") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
     public void loggerAfterReturning(JoinPoint joinPoint) {
         
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
-        logger.info("Después de devolver valor: " + method + " con los argumentos: " + args);
+        logger.info("3.Después de devolver valor: " + method + " con los argumentos: " + args);
     }
 
     // Se ejecuta después de que un método lanza una excepción. El método loggerAfterThrowing se ejecutará después de que cualquier método de la clase GreetingService lance una excepción. El JoinPoint se utiliza para obtener información sobre el método que lanzó la excepción, como su nombre y los argumentos que se le pasaron. Luego, se registra un mensaje en el logger con esta información.
-    @AfterThrowing("execution(* com.cristina.curso.springboot.aop.springboot_aop.services.GreetingService.*(..))") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
+    @AfterThrowing("GreetingServicePointcuts.greetingLoggerPointCut()") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
     public void loggerAfterThrowing(JoinPoint joinPoint) {
         
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Después de lanzar excepción: " + method + " con los argumentos: " + args);
     }
-*/
-    @Around("execution(* com.cristina.curso.springboot.aop.springboot_aop.services.GreetingService.*(..))") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
+
+    @Around("GreetingServicePointcuts.greetingLoggerPointCut()") // Intercepta cualquier método de la clase GreetingService que devuelva un String y tenga cualquier número de argumentos
     public Object loggerAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         String method = proceedingJoinPoint.getSignature().getName();
         String args = Arrays.toString(proceedingJoinPoint.getArgs());
